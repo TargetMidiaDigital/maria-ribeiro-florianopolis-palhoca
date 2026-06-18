@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maria Ribeiro · Relatórios — Target Mídia Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { min-height: 100vh; }
+    body {
+      background: #0A0A0A;
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px 24px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0, 68, 196, 0.20) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(0, 68, 196, 0.12) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .linkbio {
+      width: 100%;
+      max-width: 460px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Avatar / marca no topo */
+    .avatar {
+      width: 96px; height: 96px;
+      margin: 0 auto 24px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow:
+        0 0 0 4px rgba(0, 68, 196, 0.25),
+        0 12px 32px rgba(0, 68, 196, 0.35);
+    }
+    .avatar svg { width: 52px; height: 52px; color: #0044C4; }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .brand-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: #FFFFFF;
+    }
+    .bio {
+      text-align: center;
+      color: #A8A8A8;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-bottom: 48px;
+    }
+
+    /* Botões linkbio */
+    .links {
+      display: flex; flex-direction: column;
+      gap: 14px;
+    }
+    .link {
+      display: flex; align-items: center; gap: 18px;
+      padding: 22px 24px;
+      min-height: 104px;
+      background: #FFFFFF;
+      color: #0A0A0A;
+      text-decoration: none;
+      border-radius: 14px;
+      position: relative;
+      overflow: hidden;
+      transition:
+        transform 0.3s cubic-bezier(.22,.61,.36,1),
+        box-shadow 0.3s ease;
+    }
+    .link::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: #0044C4;
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.35s cubic-bezier(.22,.61,.36,1);
+    }
+    .link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px rgba(0, 68, 196, 0.3);
+    }
+    .link:hover::before { transform: scaleY(1); }
+
+    .link-icon {
+      width: 48px; height: 48px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      background: linear-gradient(160deg, #0050E0 0%, #002A85 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: #FFFFFF;
+      overflow: hidden;
+    }
+    .link-icon svg { width: 24px; height: 24px; }
+    .link-icon img { width: 100%; height: 100%; object-fit: cover; }
+
+    .link-text {
+      display: flex; flex-direction: column;
+      line-height: 1.2;
+    }
+    .link-title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      color: #0A0A0A;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+    }
+    .link-sub {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 13px;
+      color: #5C5C5C;
+      letter-spacing: 0.02em;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 48px;
+      color: #5C5C5C;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      line-height: 1.8;
+    }
+    .footer .credit-link {
+      color: #0044C4;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .footer .credit-link:hover { text-decoration: underline; }
+
+    /* Anim de entrada */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .avatar, .brand, .bio, .link, .footer {
+      animation: fadeUp 0.6s cubic-bezier(.22,.61,.36,1) both;
+    }
+    .avatar { animation-delay: 0.05s; }
+    .brand  { animation-delay: 0.1s; }
+    .bio    { animation-delay: 0.15s; }
+    .link:nth-of-type(1) { animation-delay: 0.3s; }
+    .link:nth-of-type(2) { animation-delay: 0.4s; }
+    .footer { animation-delay: 0.6s; }
+  </style>
+</head>
+<body>
+  <div class="linkbio">
+    <div class="brand">
+      <div class="brand-name">Maria Ribeiro</div>
+    </div>
+    <div class="bio">Relatórios · Selecione a unidade</div>
+
+    <div class="links">
+      <a class="link" href="florianopolis/apresentacao.html">
+        <span class="link-icon"><img src="florianopolis/logo.jpg" alt="Maria Ribeiro Florianópolis"></span>
+        <span class="link-text">
+          <span class="link-title">Maria Ribeiro — Florianópolis</span>
+          <span class="link-sub">Relatórios · Unidade Florianópolis</span>
+        </span>
+      </a>
+
+      <a class="link" href="palhoca/apresentacao.html">
+        <span class="link-icon"><img src="palhoca/logo.jpg" alt="Maria Ribeiro Palhoça"></span>
+        <span class="link-text">
+          <span class="link-title">Maria Ribeiro — Palhoça</span>
+          <span class="link-sub">Relatórios · Unidade Palhoça</span>
+        </span>
+      </a>
+    </div>
+
+    <div class="footer">
+      © 2026 Target Mídia Digital. Todos os direitos reservados.<br>
+      Desenvolvido por <a class="credit-link" href="https://www.instagram.com/target.midiadigital/" target="_blank" rel="noopener">@target.midiadigital</a>
+    </div>
+  </div>
+</body>
+</html>

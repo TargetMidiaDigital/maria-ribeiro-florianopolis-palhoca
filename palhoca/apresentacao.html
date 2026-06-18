@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relatórios · Maria Ribeiro Palhoça — Target Mídia Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { min-height: 100vh; }
+    body {
+      background: #0A0A0A; color: #FFFFFF; font-family: 'Inter', sans-serif;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding: 56px 24px; position: relative; overflow-x: hidden;
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0, 68, 196, 0.18) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(0, 68, 196, 0.10) 0%, transparent 55%);
+    }
+    .wrap { width: 100%; max-width: 1040px; position: relative; z-index: 2; }
+
+    .header { display: flex; align-items: center; gap: 22px; margin-bottom: 36px; }
+    /* PLACEHOLDER do logo do cliente — trocar por: <img class="client-logo" src="logo.png" alt="Maria Ribeiro"> */
+    .client-logo {
+      width: 96px; height: 96px; flex-shrink: 0; border-radius: 18px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+      object-fit: cover;
+    }
+    .header-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .header-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 34px; color: #FFFFFF; letter-spacing: 0.01em; }
+    .header-unit { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 18px; color: #A8A8A8; margin-top: 4px; }
+
+    .chart-slot {
+      width: 100%; border-radius: 18px;
+      border: 1.5px solid rgba(120, 155, 230, 0.22);
+      background: linear-gradient(180deg, rgba(0,68,196,0.07), rgba(0,68,196,0.02));
+      padding: 18px 22px 14px; margin-bottom: 36px;
+    }
+    .chart-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+    .chart-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 18px; color: #C8C8C8; letter-spacing: 0.02em; }
+    .chart-filters { display: inline-flex; gap: 10px; flex-wrap: wrap; }
+    .chart-filter { display: inline-flex; gap: 6px; background: rgba(255,255,255,0.05); border-radius: 999px; padding: 4px; }
+    .chart-filter button { border: none; background: transparent; color: #A8A8A8; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px; padding: 7px 14px; border-radius: 999px; cursor: pointer; transition: background .2s, color .2s; }
+    .chart-filter button:hover { color: #FFFFFF; }
+    .chart-filter button.active { background: #0044C4; color: #FFFFFF; }
+    .chart-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; font-family: 'Inter', sans-serif; font-size: 12px; color: #6E7790; margin-top: 8px; }
+    #chart { position: relative; }
+    #chart svg { width: 100%; height: auto; display: block; }
+    .chart-tip { position: absolute; pointer-events: none; background: #FFFFFF; color: #0A0A0A; border-radius: 12px; padding: 12px 14px; box-shadow: 0 14px 36px rgba(0,0,0,0.4); font-family: 'Inter', sans-serif; font-size: 14px; min-width: 180px; z-index: 5; }
+    .chart-tip .tip-h { font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+    .chart-tip .tip-row { display: flex; align-items: center; gap: 8px; margin-top: 5px; }
+    .chart-tip .tip-dot { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+    .chart-tip .tip-label { color: #5C5C5C; }
+    .chart-tip .tip-val { margin-left: auto; font-weight: 700; }
+    .sheet-btn { color: #8b93a7; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.02em; white-space: nowrap; transition: color .2s ease; }
+    .sheet-btn:hover { color: #FFFFFF; }
+
+    .reports {
+      border: 1.5px solid rgba(255, 255, 255, 0.12); border-radius: 20px;
+      padding: 28px 28px 32px; background: rgba(255, 255, 255, 0.015);
+    }
+    .reports-title { text-align: center; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 24px; color: #FFFFFF; letter-spacing: 0.02em; margin-bottom: 26px; }
+    .months { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .creatives { display: flex; justify-content: center; }
+    .creatives .month { min-width: 240px; }
+    .reports + .reports { margin-top: 18px; }
+
+    .month {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 62px; padding: 0 16px; border-radius: 999px; text-align: center;
+      font-family: 'Inter', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 0.01em;
+      text-decoration: none;
+    }
+    .month.disabled {
+      border: 1.5px solid rgba(255, 255, 255, 0.10);
+      color: #5C5C5C; background: transparent; cursor: default;
+    }
+    .month.active {
+      border: 1.5px solid #0044C4; color: #FFFFFF;
+      background: linear-gradient(160deg, #0050E0 0%, #002A85 100%);
+      box-shadow: 0 12px 30px rgba(0, 68, 196, 0.35);
+      transition: transform 0.25s cubic-bezier(.22,.61,.36,1), box-shadow 0.25s ease;
+    }
+    .month.active:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(0, 68, 196, 0.5); }
+
+    .foot { display: flex; align-items: center; justify-content: space-between; margin-top: 30px; }
+    .back { display: inline-flex; align-items: center; gap: 8px; color: #A8A8A8; text-decoration: none; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; transition: color 0.25s ease; }
+    .back:hover { color: #FFFFFF; }
+    .sign { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: #0044C4; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .header, .chart-slot, .reports, .foot { animation: fadeUp 0.55s cubic-bezier(.22,.61,.36,1) both; }
+    .header { animation-delay: 0.05s; }
+    .chart-slot { animation-delay: 0.15s; }
+    .reports { animation-delay: 0.25s; }
+    .foot { animation-delay: 0.35s; }
+
+    @media (max-width: 720px) {
+      .months { grid-template-columns: repeat(2, 1fr); }
+      .header-name { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <img class="client-logo" src="logo.jpg" alt="Maria Ribeiro - Palhoça">
+      <div class="header-text">
+        <div class="header-name">Maria Ribeiro</div>
+        <div class="header-unit">Unidade Palhoça</div>
+      </div>
+    </div>
+
+    <div class="chart-slot">
+      <div class="chart-head">
+        <span class="chart-title">Desempenho · 2026</span>
+        <div class="chart-filters">
+          <div class="chart-filter" data-group="scope">
+            <button type="button" data-s="total" class="active">Google + Meta</button>
+            <button type="button" data-s="meta">Meta</button>
+            <button type="button" data-s="google">Google</button>
+          </div>
+          <div class="chart-filter" data-group="metric">
+            <button type="button" data-m="msg" class="active">Volume de mensagens</button>
+            <button type="button" data-m="cost">Custo por mensagem</button>
+          </div>
+        </div>
+      </div>
+      <div id="chart"></div>
+      <div class="chart-foot">
+        <span>* Junho parcial (mês em andamento) · Consolidado Meta + Google</span>
+        <a class="sheet-btn" href="https://docs.google.com/spreadsheets/d/1zaz_tJzuzNL8YDHFisDgmVJ5sUOQuYYxcKT0ju3IHA8/edit?usp=sharing" target="_blank" rel="noopener">Ver planilha completa →</a>
+      </div>
+    </div>
+
+    <div class="reports">
+      <div class="reports-title">Relatórios</div>
+      <div class="months">
+        <span class="month disabled" aria-disabled="true">Janeiro/2026</span>
+        <span class="month disabled" aria-disabled="true">Fevereiro/2026</span>
+        <span class="month disabled" aria-disabled="true">Março/2026</span>
+        <span class="month disabled" aria-disabled="true">Abril/2026</span>
+        <a class="month active" href="maio/apresentacao.html">Maio/2026</a>
+        <span class="month disabled" aria-disabled="true">Junho/2026</span>
+        <span class="month disabled" aria-disabled="true">Julho/2026</span>
+        <span class="month disabled" aria-disabled="true">Agosto/2026</span>
+        <span class="month disabled" aria-disabled="true">Setembro/2026</span>
+        <span class="month disabled" aria-disabled="true">Outubro/2026</span>
+        <span class="month disabled" aria-disabled="true">Novembro/2026</span>
+        <span class="month disabled" aria-disabled="true">Dezembro/2026</span>
+      </div>
+    </div>
+
+    <div class="reports">
+      <div class="reports-title">Melhores Criativos</div>
+      <div class="creatives">
+        <a class="month active" href="https://drive.google.com/drive/folders/1mWBUYxhbfRDSxjYP8lu15se1fS9_sy11" target="_blank" rel="noopener">Drive</a>
+      </div>
+    </div>
+
+    <div class="foot">
+      <a class="back" href="../apresentacao.html">← Unidades</a>
+      <span class="sign">TARGET MÍDIA DIGITAL</span>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const MONTHS = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'];
+      const MONTHS_FULL = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'];
+      const fmtBRL = (v, d) => 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+      const DATA = {
+        total:  { inv: [3644.67, 2670.31, 3919.86, 3048.22, 3912.87, 1678.73], msg: [453, 336, 374, 374, 382, 146], cost: [8.05, 7.95, 10.48, 8.15, 10.24, 11.50] },
+        meta:   { inv: [3154.52, 2202.78, 3320.77, 2557.13, 3433.92, 1430.22], msg: [364, 245, 271, 282, 306, 105], cost: [5.24, 5.42, 5.62, 6.46, 7.46, 9.09] },
+        google: { inv: [490.15, 467.53, 599.09, 491.09, 478.95, 248.51],       msg: [89, 91, 103, 92, 76, 41],      cost: [5.51, 5.14, 5.82, 5.34, 6.30, 6.06] },
+      };
+      const METRIC = {
+        msg:  { name: 'Volume de mensagens', color: '#36C6A8', fmt: v => String(v) },
+        cost: { name: 'Custo por mensagem',  color: '#F2B53D', fmt: v => fmtBRL(v, 2) },
+      };
+      let scope = 'total', metric = 'msg';
+
+      const NS = 'http://www.w3.org/2000/svg';
+      const W = 1000, Hh = 400, x0 = 70, x1 = 946, baseY = 332, barMaxH = 152, lineTop = 78, lineBot = 142, bw = 72;
+      const xs = MONTHS.map((_, i) => x0 + i * (x1 - x0) / (MONTHS.length - 1));
+      const el = (n) => document.createElementNS(NS, n);
+      function ln(a, b, c, d, col, w) { const l = el('line'); l.setAttribute('x1', a); l.setAttribute('y1', b); l.setAttribute('x2', c); l.setAttribute('y2', d); l.setAttribute('stroke', col); l.setAttribute('stroke-width', w); l.setAttribute('stroke-linecap', 'round'); return l; }
+      function tx(x, y, t, col, size, anchor, weight) { const e = el('text'); e.setAttribute('x', x); e.setAttribute('y', y); e.setAttribute('fill', col); e.setAttribute('font-size', size); e.setAttribute('font-family', 'Inter, sans-serif'); e.setAttribute('text-anchor', anchor || 'start'); if (weight) e.setAttribute('font-weight', weight); e.textContent = t; return e; }
+
+      function render() {
+        const inv = DATA[scope].inv, sec = METRIC[metric], secVals = DATA[scope][metric];
+        const svg = el('svg'); svg.setAttribute('viewBox', '0 0 ' + W + ' ' + Hh);
+        const defs = el('defs'); const lg = el('linearGradient'); lg.setAttribute('id', 'barGrad'); lg.setAttribute('x1', '0'); lg.setAttribute('y1', '0'); lg.setAttribute('x2', '0'); lg.setAttribute('y2', '1');
+        [['0', '#4a82e6'], ['1', '#0a3aa0']].forEach(p => { const st = el('stop'); st.setAttribute('offset', p[0]); st.setAttribute('stop-color', p[1]); lg.appendChild(st); }); defs.appendChild(lg); svg.appendChild(defs);
+
+        MONTHS.forEach((m, i) => svg.appendChild(tx(xs[i], baseY + 30, m, '#8b93a7', 18, 'middle', 500)));
+        svg.appendChild(ln(x0 - 26, baseY, x1 + 26, baseY, 'rgba(255,255,255,0.12)', 1));
+
+        const sw = el('rect'); sw.setAttribute('x', 70); sw.setAttribute('y', 34); sw.setAttribute('width', 22); sw.setAttribute('height', 14); sw.setAttribute('rx', 3); sw.setAttribute('fill', 'url(#barGrad)'); svg.appendChild(sw);
+        svg.appendChild(tx(100, 46, 'Investimento', '#E6E6E6', 18, 'start', 700));
+        svg.appendChild(ln(362, 41, 394, 41, sec.color, 4));
+        svg.appendChild(tx(404, 46, sec.name, '#E6E6E6', 18, 'start', 700));
+
+        const invMax = Math.max.apply(null, inv);
+        inv.forEach((v, i) => {
+          const h = v / invMax * barMaxH, top = baseY - h;
+          const r = el('rect'); r.setAttribute('x', xs[i] - bw / 2); r.setAttribute('y', top); r.setAttribute('width', bw); r.setAttribute('height', h); r.setAttribute('rx', 6); r.setAttribute('fill', 'url(#barGrad)'); svg.appendChild(r);
+          svg.appendChild(tx(xs[i], top - 10, fmtBRL(Math.round(v), 0), '#cdd6ea', 14, 'middle', 700));
+        });
+
+        const mn = Math.min.apply(null, secVals), mx = Math.max.apply(null, secVals);
+        const ys = secVals.map(v => mx === mn ? (lineTop + lineBot) / 2 : lineBot - (v - mn) / (mx - mn) * (lineBot - lineTop));
+        let d = ''; xs.forEach((x, i) => d += (i ? 'L' : 'M') + x + ' ' + ys[i] + ' ');
+        const path = el('path'); path.setAttribute('d', d); path.setAttribute('fill', 'none'); path.setAttribute('stroke', sec.color); path.setAttribute('stroke-width', 3); path.setAttribute('stroke-linejoin', 'round'); path.setAttribute('stroke-linecap', 'round'); svg.appendChild(path);
+        xs.forEach((x, i) => {
+          const c = el('circle'); c.setAttribute('cx', x); c.setAttribute('cy', ys[i]); c.setAttribute('r', 5); c.setAttribute('fill', '#0A0A0A'); c.setAttribute('stroke', sec.color); c.setAttribute('stroke-width', 3); svg.appendChild(c);
+          svg.appendChild(tx(x, ys[i] - 11, sec.fmt(secVals[i]), sec.color, 14, 'middle', 700));
+        });
+
+        const guide = ln(0, lineTop - 8, 0, baseY, 'rgba(255,255,255,0.20)', 1); guide.style.display = 'none'; svg.appendChild(guide);
+        const colStep = (x1 - x0) / (MONTHS.length - 1);
+        const host = document.getElementById('chart');
+        const tip = document.createElement('div'); tip.className = 'chart-tip'; tip.style.display = 'none';
+        const rowHtml = (color, label, val) => '<div class="tip-row"><span class="tip-dot" style="background:' + color + '"></span><span class="tip-label">' + label + '</span><span class="tip-val">' + val + '</span></div>';
+        MONTHS.forEach((m, i) => {
+          const r = el('rect'); r.setAttribute('x', xs[i] - colStep / 2); r.setAttribute('y', 0); r.setAttribute('width', colStep); r.setAttribute('height', Hh); r.setAttribute('fill', 'transparent'); r.setAttribute('pointer-events', 'all'); r.style.cursor = 'pointer';
+          r.addEventListener('mouseenter', () => {
+            guide.setAttribute('x1', xs[i]); guide.setAttribute('x2', xs[i]); guide.style.display = '';
+            tip.innerHTML = '<div class="tip-h">' + MONTHS_FULL[i] + '/2026</div>'
+              + rowHtml('#2f6ee0', 'Investimento', fmtBRL(Math.round(DATA[scope].inv[i]), 0))
+              + rowHtml('#36C6A8', 'Mensagens', String(DATA[scope].msg[i]))
+              + rowHtml('#F2B53D', 'Custo/Msg', fmtBRL(DATA[scope].cost[i], 2));
+            tip.style.display = 'block';
+            const cr = host.getBoundingClientRect(), hr = r.getBoundingClientRect();
+            let left = (hr.left + hr.width / 2 - cr.left) - tip.offsetWidth / 2;
+            left = Math.max(6, Math.min(left, cr.width - tip.offsetWidth - 6));
+            tip.style.left = left + 'px'; tip.style.top = '12px';
+          });
+          r.addEventListener('mouseleave', () => { guide.style.display = 'none'; tip.style.display = 'none'; });
+          svg.appendChild(r);
+        });
+        host.innerHTML = ''; host.appendChild(svg); host.appendChild(tip);
+      }
+
+      function wire(group, attr, set) {
+        document.querySelectorAll('.chart-filter[data-group="' + group + '"] button').forEach(btn => btn.addEventListener('click', () => {
+          document.querySelectorAll('.chart-filter[data-group="' + group + '"] button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active'); set(btn.dataset[attr]); render();
+        }));
+      }
+      wire('scope', 's', v => scope = v);
+      wire('metric', 'm', v => metric = v);
+      render();
+    })();
+  </script>
+</body>
+</html>
