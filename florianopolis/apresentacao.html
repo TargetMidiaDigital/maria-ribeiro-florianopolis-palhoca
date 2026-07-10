@@ -138,7 +138,7 @@
       </div>
       <div id="chart"></div>
       <div class="chart-foot">
-        <span>* Junho parcial (mês em andamento) · Consolidado Meta + Google</span>
+        <span>* Consolidado Meta + Google</span>
         <a class="sheet-btn" href="https://docs.google.com/spreadsheets/d/1zaz_tJzuzNL8YDHFisDgmVJ5sUOQuYYxcKT0ju3IHA8/edit?usp=sharing" target="_blank" rel="noopener">Ver planilha completa →</a>
       </div>
     </div>
@@ -151,7 +151,7 @@
         <span class="month disabled" aria-disabled="true">Março/2026</span>
         <span class="month disabled" aria-disabled="true">Abril/2026</span>
         <a class="month active" href="maio/apresentacao.html">Maio/2026</a>
-        <span class="month disabled" aria-disabled="true">Junho/2026</span>
+        <a class="month active" href="junho/apresentacao.html">Junho/2026</a>
         <span class="month disabled" aria-disabled="true">Julho/2026</span>
         <span class="month disabled" aria-disabled="true">Agosto/2026</span>
         <span class="month disabled" aria-disabled="true">Setembro/2026</span>
@@ -180,9 +180,9 @@
       const MONTHS_FULL = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'];
       const fmtBRL = (v, d) => 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
       const DATA = {
-        total:  { inv: [3743.33, 3354.66, 3846.10, 3635.34, 4112.37, 1707.86], msg: [422, 448, 532, 533, 446, 184], cost: [8.87, 7.49, 7.23, 6.82, 9.22, 9.28] },
-        meta:   { inv: [3126.87, 2817.59, 3160.80, 3000.14, 3570.30, 1483.23], msg: [346, 364, 438, 442, 383, 147], cost: [5.15, 4.98, 4.80, 4.49, 6.26, 8.00] },
-        google: { inv: [616.46, 537.07, 685.30, 635.20, 542.07, 224.63],       msg: [76, 84, 94, 91, 63, 37],       cost: [8.11, 6.39, 7.29, 6.98, 8.60, 6.07] },
+        total:  { inv: [3743.33, 3354.66, 3846.10, 3635.34, 4112.37, 3572.93], msg: [422, 448, 532, 533, 446, 406], cost: [8.87, 7.49, 7.23, 6.82, 9.22, 8.80] },
+        meta:   { inv: [3126.87, 2817.59, 3160.80, 3000.14, 3570.30, 3082.09], msg: [346, 364, 438, 442, 383, 338], cost: [5.15, 4.98, 4.80, 4.49, 6.26, 7.18] },
+        google: { inv: [616.46, 537.07, 685.30, 635.20, 542.07, 490.84],       msg: [76, 84, 94, 91, 63, 68],       cost: [8.11, 6.39, 7.29, 6.98, 8.60, 7.22] },
       };
       const METRIC = {
         msg:  { name: 'Volume de mensagens', color: '#36C6A8', fmt: v => String(v) },
