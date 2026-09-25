@@ -1,6 +1,6 @@
 # Maria Ribeiro — Relatórios de Performance
 
-Relatórios de desempenho (Florianópolis e Palhoça) — Target Mídia Digital.
+Relatórios de desempenho (Florianópolis, Palhoça e Debutante) — Target Mídia Digital.
 
 ## Estrutura
 
@@ -18,6 +18,11 @@ palhoca/
   logo.jpg
   maio/apresentacao.html
   maio/creativos/
+debutante/                     ← unidade com foco em tráfego (cliques / custo por clique)
+  apresentacao.html            ← seleção de mês + gráfico (só Meta, a partir de Agosto/2026)
+  logo.jpg
+  agosto/apresentacao.html     ← 4 slides: capa, estratégia, Facebook Ads, top criativo
+  agosto/creativos/
 ```
 
 ## Navegação do relatório (`<unidade>/maio/apresentacao.html`)
